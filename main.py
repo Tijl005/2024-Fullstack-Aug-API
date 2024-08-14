@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from models import models
 import database
 from queries import querie
 from fastapi.middleware.cors import CORSMiddleware
@@ -46,3 +46,31 @@ def get_practice():
         practice_to_return.append(practice_dictionary)
 
     return {'practice': practice_to_return}
+
+@app.get("/tour_get")
+def get_tour():
+    query = querie.get_tour
+    tour = database.execute_sql_query(query)
+    tour_to_return = []
+    for tours in tour:
+        tour_dictionary = {
+                            "tourId": tours[0],
+                            "firstName": tours[1],
+                            "lastName": tours[2],
+                            "email": tours[3]
+                            }
+        tour_to_return.append(tour_dictionary)
+
+    return {'tour': tour_to_return}
+
+@app.post("/tour")
+def create_tour(tour: models.tour):
+    query = querie.insert_tour
+    success = database.execute_sql_query(query,(
+        tour.tourId,
+        tour.firstName,
+        tour.lastName,
+        tour.email
+    ))
+    if success:
+        return tour
