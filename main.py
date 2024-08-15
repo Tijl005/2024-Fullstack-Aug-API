@@ -39,9 +39,10 @@ def get_practice():
     practice_to_return = []
     for practices in practice:
         practice_dictionary = {
-                            "name": practices[0],
-                            "picture": practices[1],
-                            "paragraph": practices[2]
+                            "practiceId": practices[0],
+                            "name": practices[1],
+                            "picture": practices[2],
+                            "paragraph": practices[3]
                             }
         practice_to_return.append(practice_dictionary)
 
